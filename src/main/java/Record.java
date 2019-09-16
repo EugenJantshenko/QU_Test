@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public class RecordEntity {
+public class Record {
 
     private String firstChar;
     private String serviceId;
@@ -13,83 +13,83 @@ public class RecordEntity {
     private Date dateTo;
     private String waitingTime;
 
-    public String getFirstChar() {
+    String getFirstChar() {
         return firstChar;
     }
 
-    public void setFirstChar(String firstChar) {
+    void setFirstChar(String firstChar) {
         this.firstChar = firstChar;
     }
 
-    public String getServiceId() {
+    String getServiceId() {
         return serviceId;
     }
 
-    public void setServiceId(String serviceId) {
+    void setServiceId(String serviceId) {
         this.serviceId = serviceId;
     }
 
-    public String getVariationId() {
+    String getVariationId() {
         return variationId;
     }
 
-    public void setVariationId(String variationId) {
+    void setVariationId(String variationId) {
         this.variationId = variationId;
     }
 
-    public String getQuestionTypeId() {
+    String getQuestionTypeId() {
         return questionTypeId;
     }
 
-    public void setQuestionTypeId(String questionTypeId) {
+    void setQuestionTypeId(String questionTypeId) {
         this.questionTypeId = questionTypeId;
     }
 
-    public String getCategoryId() {
+    String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(String categoryId) {
+    void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 
-    public String getSubcategoryId() {
+    String getSubcategoryId() {
         return subcategoryId;
     }
 
-    public void setSubcategoryId(String subcategoryId) {
+    void setSubcategoryId(String subcategoryId) {
         this.subcategoryId = subcategoryId;
     }
 
-    public String getResponseType() {
+    String getResponseType() {
         return responseType;
     }
 
-    public void setResponseType(String responseType) {
+    void setResponseType(String responseType) {
         this.responseType = responseType;
     }
 
-    public Date getDateFrom() {
+    Date getDateFrom() {
         return dateFrom;
     }
 
-    public void setDateFrom(Date dateFrom) {
+    void setDateFrom(Date dateFrom) {
         this.dateFrom = dateFrom;
     }
 
-    public Date getDateTo() {
+    Date getDateTo() {
         return dateTo;
     }
 
-    public void setDateTo(Date dateTo) {
+    void setDateTo(Date dateTo) {
         this.dateTo = dateTo;
     }
 
-    public String getWaitingTime() {
+    String getWaitingTime() {
         return waitingTime;
     }
 
-    public void setWaitingTime(String waitingTime) {
+    void setWaitingTime(String waitingTime) {
         this.waitingTime = waitingTime;
     }
 

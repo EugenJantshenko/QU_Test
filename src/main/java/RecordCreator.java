@@ -1,41 +1,31 @@
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.stream.Collectors;
 
-class StringToObjectParser {
-
-    List<RecordEntity> parseString(String path) {
-        InputFileReader reader = new InputFileReader();
-        List<RecordEntity> result = reader.readFromTxt(path).stream()
-                .skip(1)
-                .map(item -> {
-                    try {
-                        return createRecordEntity(splitLine(item));
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                        throw new RuntimeException(e);
-                    }
-                })
-                .collect(Collectors.toList());
-        result.stream().forEach(System.out::println);
-        return result;
-    }
-
-    private String[] splitLine(String line) {
+class RecordCreator {
+    @NotNull
+    @Contract(pure = true)
+    private String[] splitLine(@NotNull String line) {
         return line.split("\\s+");
     }
 
-    private String[] splitElement(String line) {
+    @NotNull
+    @Contract(pure = true)
+    private String[] splitElement(@NotNull String line) {
         return line.split("\\.");
     }
 
-    private String[] splitDate(String line) {
+    @NotNull
+    @Contract(pure = true)
+    private String[] splitDate(@NotNull String line) {
         return line.split("-");
     }
 
-    private RecordEntity createRecordEntity(String[] line) throws ParseException {
-        RecordEntity entity = new RecordEntity();
+    Record createRecordEntity(String inputLine) throws ParseException {
+        Record entity = new Record();
+        String[] line=splitLine(inputLine);
         entity.setFirstChar(line[0]);
         String[] service = splitElement(line[1]);
         if (service.length == 2) {

@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        QueryHandler handler = new QueryHandler();
-        handler.handleQueries("input.txt");
+        QueryMatcher parser =new QueryMatcher();
+        parser.matchQuery("input.txt");
     }
 }
