@@ -1,60 +1,62 @@
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 class RecordCreator {
-    @NotNull
-    @Contract(pure = true)
+
+    private final Integer FIRST_CHAR = 0;
+    private final Integer SERVICE = 1;
+    private final Integer QUESTION = 2;
+    private final Integer RESPONSE = 3;
+    private final Integer DATA = 4;
+    private final Integer WAITING_TIME = 5;
+
+    private final Integer SERVICE_ID = 0;
+    private final Integer VARIATION_ID = 1;
+    private final Integer QUESTION_TYPE_ID = 0;
+    private final Integer CATEGORY_ID = 1;
+    private final Integer SUB_CATEGORY_ID = 2;
+    private final Integer DATE_FROM = 0;
+    private final Integer DATE_TO = 1;
+
     private String[] splitLine(@NotNull String line) {
         return line.split("\\s+");
     }
 
-    @NotNull
-    @Contract(pure = true)
     private String[] splitElement(@NotNull String line) {
         return line.split("\\.");
     }
 
-    @NotNull
-    @Contract(pure = true)
     private String[] splitDate(@NotNull String line) {
         return line.split("-");
     }
 
     Record createRecordEntity(String inputLine) throws ParseException {
         Record entity = new Record();
-        String[] line=splitLine(inputLine);
-        entity.setFirstChar(line[0]);
-        String[] service = splitElement(line[1]);
-        if (service.length == 2) {
-            entity.setServiceId(service[0]);
-            entity.setVariationId(service[1]);
-        } else if (service.length == 1) {
-            entity.setServiceId(service[0]);
+        String[] line = splitLine(inputLine);
+        entity.setFirstChar(line[FIRST_CHAR]);
+        String[] service = splitElement(line[SERVICE]);
+        if (service.length >VARIATION_ID) {
+            entity.setVariationId(service[VARIATION_ID]);
         }
-        String[] question = splitElement(line[2]);
-        if (question.length == 3) {
-            entity.setQuestionTypeId(question[0]);
-            entity.setCategoryId(question[1]);
-            entity.setSubcategoryId(question[2]);
-        } else if (question.length == 2) {
-            entity.setQuestionTypeId(question[0]);
-            entity.setCategoryId(question[1]);
-        } else if (question.length == 1) {
-            entity.setQuestionTypeId(question[0]);
+        entity.setServiceId(service[SERVICE_ID]);
+        String[] question = splitElement(line[QUESTION]);
+        entity.setQuestionTypeId(question[QUESTION_TYPE_ID]);
+        if (question.length >CATEGORY_ID) {
+            entity.setCategoryId(question[CATEGORY_ID]);
         }
-        entity.setResponseType(line[3]);
-        String[] date = splitDate(line[4]);
-        if (date.length == 2) {
-            entity.setDateFrom(new SimpleDateFormat("dd.MM.yyyy").parse(date[0]));
-            entity.setDateTo(new SimpleDateFormat("dd.MM.yyyy").parse(date[1]));
-        } else if (date.length == 1) {
-            entity.setDateFrom(new SimpleDateFormat("dd.MM.yyyy").parse(date[0]));
+        if (question.length >SUB_CATEGORY_ID) {
+            entity.setSubcategoryId(question[SUB_CATEGORY_ID]);
         }
-        if (line.length == 6) {
-            entity.setWaitingTime(line[5]);
+        entity.setResponseType(line[RESPONSE]);
+        String[] date = splitDate(line[DATA]);
+        if (date.length >DATE_TO) {
+            entity.setDateTo(new SimpleDateFormat("dd.MM.yyyy").parse(date[DATE_TO]));
+        }
+        entity.setDateFrom(new SimpleDateFormat("dd.MM.yyyy").parse(date[DATE_FROM]));
+        if (line.length >WAITING_TIME) {
+            entity.setWaitingTime(line[WAITING_TIME]);
         }
         return entity;
     }

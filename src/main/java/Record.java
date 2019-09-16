@@ -1,4 +1,5 @@
 import java.util.Date;
+import java.util.Objects;
 
 public class Record {
 
@@ -107,5 +108,27 @@ public class Record {
                 ", dateTo=" + dateTo +
                 ", waitingTime='" + waitingTime + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Record record = (Record) o;
+        return Objects.equals(firstChar, record.firstChar) &&
+                Objects.equals(serviceId, record.serviceId) &&
+                Objects.equals(variationId, record.variationId) &&
+                Objects.equals(questionTypeId, record.questionTypeId) &&
+                Objects.equals(categoryId, record.categoryId) &&
+                Objects.equals(subcategoryId, record.subcategoryId) &&
+                Objects.equals(responseType, record.responseType) &&
+                Objects.equals(dateFrom, record.dateFrom) &&
+                Objects.equals(dateTo, record.dateTo) &&
+                Objects.equals(waitingTime, record.waitingTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstChar, serviceId, variationId, questionTypeId, categoryId, subcategoryId, responseType, dateFrom, dateTo, waitingTime);
     }
 }
