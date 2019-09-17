@@ -1,3 +1,5 @@
+package inputoutput;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -8,9 +10,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-class InputFileReader {
+public class InputFileReader {
 
-    List<String> readFromTxt(String path) {
+    public List<String> readFromTxt(String path) {
         Stream<String> lines;
         try {
             Path filePath = Paths.get(Objects.requireNonNull(getClass().getClassLoader().getResource(path)).toURI());

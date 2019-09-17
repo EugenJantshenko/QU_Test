@@ -1,9 +1,12 @@
+package service;
+
+import entity.Record;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-class RecordCreator {
+public class RecordCreator {
 
     private final Integer FIRST_CHAR = 0;
     private final Integer SERVICE = 1;
@@ -20,6 +23,35 @@ class RecordCreator {
     private final Integer DATE_FROM = 0;
     private final Integer DATE_TO = 1;
 
+    public Record createRecordEntity(String inputLine) throws ParseException {
+        Record entity = new Record();
+        String[] line = splitLine(inputLine);
+        entity.setFirstChar(line[FIRST_CHAR]);
+        String[] service = splitElement(line[SERVICE]);
+        if (service.length > VARIATION_ID) {
+            entity.setVariationId(service[VARIATION_ID]);
+        }
+        entity.setServiceId(service[SERVICE_ID]);
+        String[] question = splitElement(line[QUESTION]);
+        entity.setQuestionTypeId(question[QUESTION_TYPE_ID]);
+        if (question.length > CATEGORY_ID) {
+            entity.setCategoryId(question[CATEGORY_ID]);
+        }
+        if (question.length > SUB_CATEGORY_ID) {
+            entity.setSubcategoryId(question[SUB_CATEGORY_ID]);
+        }
+        entity.setResponseType(line[RESPONSE]);
+        String[] date = splitDate(line[DATA]);
+        if (date.length > DATE_TO) {
+            entity.setDateTo(new SimpleDateFormat("dd.MM.yyyy").parse(date[DATE_TO]));
+        }
+        entity.setDateFrom(new SimpleDateFormat("dd.MM.yyyy").parse(date[DATE_FROM]));
+        if (line.length > WAITING_TIME) {
+            entity.setWaitingTime(line[WAITING_TIME]);
+        }
+        return entity;
+    }
+
     private String[] splitLine(@NotNull String line) {
         return line.split("\\s+");
     }
@@ -30,34 +62,5 @@ class RecordCreator {
 
     private String[] splitDate(@NotNull String line) {
         return line.split("-");
-    }
-
-    Record createRecordEntity(String inputLine) throws ParseException {
-        Record entity = new Record();
-        String[] line = splitLine(inputLine);
-        entity.setFirstChar(line[FIRST_CHAR]);
-        String[] service = splitElement(line[SERVICE]);
-        if (service.length >VARIATION_ID) {
-            entity.setVariationId(service[VARIATION_ID]);
-        }
-        entity.setServiceId(service[SERVICE_ID]);
-        String[] question = splitElement(line[QUESTION]);
-        entity.setQuestionTypeId(question[QUESTION_TYPE_ID]);
-        if (question.length >CATEGORY_ID) {
-            entity.setCategoryId(question[CATEGORY_ID]);
-        }
-        if (question.length >SUB_CATEGORY_ID) {
-            entity.setSubcategoryId(question[SUB_CATEGORY_ID]);
-        }
-        entity.setResponseType(line[RESPONSE]);
-        String[] date = splitDate(line[DATA]);
-        if (date.length >DATE_TO) {
-            entity.setDateTo(new SimpleDateFormat("dd.MM.yyyy").parse(date[DATE_TO]));
-        }
-        entity.setDateFrom(new SimpleDateFormat("dd.MM.yyyy").parse(date[DATE_FROM]));
-        if (line.length >WAITING_TIME) {
-            entity.setWaitingTime(line[WAITING_TIME]);
-        }
-        return entity;
     }
 }
